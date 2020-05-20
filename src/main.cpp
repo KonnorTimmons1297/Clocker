@@ -6,6 +6,13 @@
 const char* CONFIG_FILE_NAME = ".clocker";
 
 int main() {
-	Config config(CONFIG_FILE_NAME);
+	Config config;
+
+	if ( !config.read(CONFIG_FILE_NAME) ) {
+		config.create(CONFIG_FILE_NAME);
+	}
+
+	
+
 	return 0;
 }
