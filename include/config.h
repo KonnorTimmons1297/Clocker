@@ -8,9 +8,6 @@ class Config
 private:
 
 public:
-    Config(string) {
-
-    }
-
-    bool save(string);
+    bool read(string);
+    bool write(string);
 };
