@@ -1,40 +1,52 @@
+#include <iostream>
+
 #include "config.h"
 
 #include "json.hpp"
 #include "util.h"
 
-// string Config::serialize() {
-//     json config_json;
+using json = nlohmann::json;
 
-//     config_json[""] = last_user;
+static const char * KEY_LAST_USER = "LAST_USER";
 
-//     return config_json.dump();
-// }
-
-// Config Config::deserialize(string config_json) {
-//     auto json = json::parse(config_json);
-//     Config test;
-//     return test;
-// }
-
-bool Config::create(string file_path)
-{
-    return false;
-}
-
-bool Config::read(string file_path)
+Config::Config(string file_path)
 {
     if (file_path.length() == 0)
-        return false;
+    {
+        std::cout << "Config::Config() ==> file_path is empty" << std::endl;
+        exit(1);
+    }
+
+    if (!file_util::exists(file_path.c_str()))
+    {
+        // file_util::create(file_path);
+    }
 
     string config_data = file_util::read(file_path.c_str());
-    string config_json(file_data);
-    Config config = deserialize(config_json);
-
-    return true;
+    
+    //Deserialization
+    // Config config;
+    // auto obj = json::parse(config_data);
+    // config.last_user = obj[KEY_LAST_USER];
+    // return config;
 }
 
-bool Config::write(string file_name)
+bool Config::save(string file_path)
 {
+    if(file_path.length() == 0)
+    {
+        std::cout << "Config::save() => file_path is empty" << std::endl;
+        return false;
+    }
+
+    //Open the file
+
+    //Serialize the data
+    // json obj;
+    // obj[KEY_LAST_USER] = last_user;
+    // return obj.dump();
+
+    //write to file
+
     return true;
 }

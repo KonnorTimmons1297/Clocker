@@ -1,3 +1,6 @@
+#ifndef FILE_UTIL_H
+#define FILE_UTIL_H
+
 #include <iostream>
 #include <fstream>
 #include <string>
@@ -8,6 +11,7 @@ using std::string;
 
 namespace file_util
 {
+    
     bool exists(const char *file_path)
     {
         ifstream file(file_path);
@@ -38,4 +42,7 @@ namespace file_util
 
         return file_data;
     }
+
 } // namespace file_util
+
+#endif

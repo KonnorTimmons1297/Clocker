@@ -9,5 +9,9 @@ int main()
 {
 	Config config(CONFIG_FILE_NAME);
 
+	config.last_user = "Konnor";
+
+	config.save(CONFIG_FILE_NAME);
+
 	return 0;
 }
