@@ -5,19 +5,21 @@
 
 using json = nlohmann::json;
 
-string Config::serialize() {
-    json config_json;
+// string Config::serialize() {
+//     json config_json;
 
-    config_json[""] = last_user;
+//     config_json[""] = last_user;
 
-    return config_json.dump();
-}
+//     return config_json.dump();
+// }
 
-Config Config::deserialize(string config_json) {
-    auto json = json::parse(config_json);
-    Config test;
-    return test;
-}
+// Config Config::deserialize(string config_json) {
+//     auto json = json::parse(config_json);
+//     Config test;
+//     return test;
+// }
+
+
 
 bool Config::create(string file_name) {
     return false;
