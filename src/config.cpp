@@ -3,8 +3,6 @@
 #include "json.hpp"
 #include "util.h"
 
-using json = nlohmann::json;
-
 // string Config::serialize() {
 //     json config_json;
 
@@ -19,22 +17,24 @@ using json = nlohmann::json;
 //     return test;
 // }
 
-
-
-bool Config::create(string file_name) {
+bool Config::create(string file_path)
+{
     return false;
 }
 
-bool Config::read(string file_name) {
-    if(file_name.length() == 0) return false;
-    
-    char *file_data = util::readFile(file_name.c_str());
+bool Config::read(string file_path)
+{
+    if (file_path.length() == 0)
+        return false;
+
+    string config_data = file_util::read(file_path.c_str());
     string config_json(file_data);
     Config config = deserialize(config_json);
 
     return true;
 }
 
-bool Config::write(string file_name) {
+bool Config::write(string file_name)
+{
     return true;
 }

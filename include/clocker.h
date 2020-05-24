@@ -1,5 +1,5 @@
-enum class ClockAction {
-    In, Out
+enum class ClockAction
+{
+    In,
+    Out
 };
-
-

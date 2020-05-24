@@ -3,9 +3,10 @@
 #include "config.h"
 #include "clocker.h"
 
-const char* CONFIG_FILE_NAME = ".clocker";
+const char *CONFIG_FILE_NAME = ".clocker";
 
-int main() {
+int main()
+{
 	Config config(CONFIG_FILE_NAME);
 
 	return 0;

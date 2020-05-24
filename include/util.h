@@ -1,31 +1,41 @@
-#include <stdio.h>
+#include <iostream>
+#include <fstream>
+#include <string>
 
-namespace util {
+using std::ifstream;
+using std::ios;
+using std::string;
 
+namespace file_util
+{
+    bool exists(const char *file_path)
+    {
+        ifstream file(file_path);
+        return file.good();
+    }
 
-    char * readFile( const char * file_name ) {
-        FILE *file = fopen( file_name, "r" );
+    string read(const char *file_path)
+    {
+        ifstream file(file_path, ios::in);
 
-        if ( !file ) {
-            printf( "Unable to open file!\n" );
-            exit( -1 );
+        if (file.bad())
+        {
+            std::cout << "Unable to open file: " << file_path << std::endl;
+            exit(-1);
         }
 
-        //Get number of bytes in file
-        fseek( file, 0L, SEEK_END );
-        int num_bytes = ftell( file );
-        fseek( file, 0L, SEEK_SET );
+        file.open(file_path);
 
-        char *file_data = (char*) calloc( num_bytes, sizeof(char) );
+        //Retrieving the size of the file
+        file.seekg(0, ios::end);
+        auto file_size = file.tellg();
 
-        if( file_data == NULL ) {
-            printf( "Unable to allocate enough contiguous memory for file data!\n" );
-            exit( -1 );
-        }
+        char *file_data = new char[file_size];
 
-        fread( file_data, sizeof(char), num_bytes, file );
+        file.read(file_data, file_size);
+
+        file.close();
 
         return file_data;
     }
-}
-
+} // namespace file_util
