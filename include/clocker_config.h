@@ -1,28 +1,25 @@
 #include <vector>
 
 #include "config.h"
-#include "user.h"
+#include "timesheet.h"
 
 using std::vector;
-
-enum class ClockAction {
-    In,
-    Out
-};
 
 class ClockerConfig : public Config {
 public:
     bool first_open = false;
-    vector<User> users;
 
-    string last_user;
+public:
+    //Serialized members
+    string user_name;
+    vector<Timesheet> timesheets;
 
 public:
     ClockerConfig();
 
     bool save() override;
 
-protected:
+private:
     string serialize();
 
     void deserialize(const string &);

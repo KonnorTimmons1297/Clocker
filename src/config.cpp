@@ -4,7 +4,7 @@
 
 #include "config.h"
 
-#include "json.hpp"
+#include "json.h"
 
 using std::fstream;
 
