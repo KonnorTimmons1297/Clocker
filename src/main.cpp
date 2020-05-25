@@ -1,17 +1,21 @@
-#include <iostream>
-
-#include "config.h"
 #include "clocker.h"
 
-const char *CONFIG_FILE_NAME = ".clocker";
+void new_user();
 
-int main()
-{
-	Config config(CONFIG_FILE_NAME);
+int main() {
+    ClockerConfig config;
 
-	config.last_user = "Konnor";
+    if (config.first_open) {
+        new_user();
+    } else {
+        config.users.emplace_back("Jeff");
+    }
 
-	config.save(CONFIG_FILE_NAME);
+    config.save();
 
-	return 0;
+    return 0;
+}
+
+void new_user() {
+
 }

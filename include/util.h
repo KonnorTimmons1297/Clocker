@@ -1,29 +1,29 @@
 #ifndef FILE_UTIL_H
 #define FILE_UTIL_H
 
+#include <filesystem>
 #include <iostream>
 #include <fstream>
 #include <string>
+
+#include "logger.h"
 
 using std::ifstream;
 using std::ios;
 using std::string;
 
-namespace file_util
-{
-    
-    bool exists(const char *file_path)
-    {
-        ifstream file(file_path);
-        return file.good();
+namespace fs = std::filesystem;
+
+namespace file_util {
+
+    bool exists(string file_path) {
+        return fs::exists(file_path);
     }
 
-    string read(const char *file_path)
-    {
+    string read(string file_path) {
         ifstream file(file_path, ios::in);
 
-        if (file.bad())
-        {
+        if (file.bad()) {
             std::cout << "Unable to open file: " << file_path << std::endl;
             exit(-1);
         }
@@ -34,6 +34,10 @@ namespace file_util
         file.seekg(0, ios::end);
         auto file_size = file.tellg();
 
+        if (file_size < 0) {
+            return "";
+        }
+
         char *file_data = new char[file_size];
 
         file.read(file_data, file_size);
@@ -43,6 +47,15 @@ namespace file_util
         return file_data;
     }
 
-} // namespace file_util
+    bool create(string file_path) {
+        bool result;
+
+        result = fs::create_directory(file_path);
+
+
+        return result;
+    }
+
+}
 
 #endif

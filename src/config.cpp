@@ -1,52 +1,56 @@
 #include <iostream>
+#include <fstream>
+#include <filesystem>
 
 #include "config.h"
 
 #include "json.hpp"
-#include "util.h"
 
-using json = nlohmann::json;
+using std::fstream;
 
-static const char * KEY_LAST_USER = "LAST_USER";
+namespace fs = std::filesystem;
 
-Config::Config(string file_path)
-{
-    if (file_path.length() == 0)
-    {
-        std::cout << "Config::Config() ==> file_path is empty" << std::endl;
+Config::Config(const string &config_dir, const string &file_name) {
+    if (config_dir.length() == 0) {
+        std::cout << "Config::Config() => config_dir is empty" << std::endl;
         exit(1);
     }
 
-    if (!file_util::exists(file_path.c_str()))
-    {
-        // file_util::create(file_path);
+    if (file_name.length() == 0) {
+        std::cout << "Config::Config() => file_name is empty" << std::endl;
+        exit(1);
     }
 
-    string config_data = file_util::read(file_path.c_str());
-    
-    //Deserialization
-    // Config config;
-    // auto obj = json::parse(config_data);
-    // config.last_user = obj[KEY_LAST_USER];
-    // return config;
+    this->config_dir = config_dir;
+    this->file_name = file_name;
+
+    fs::directory_entry config_directory(config_dir);
+
+    if (!config_directory.exists()) {
+        fs::create_directory(config_dir);
+    }
+
+    string full_config_file_path;
+    full_config_file_path = config_dir + fs::path::preferred_separator + file_name;
+
+    fstream config_file(full_config_file_path, std::ios::in);
+
+    config_file << " ";
+
+    config_file.flush();
+    config_file.close();
 }
 
-bool Config::save(string file_path)
-{
-    if(file_path.length() == 0)
-    {
-        std::cout << "Config::save() => file_path is empty" << std::endl;
+bool Config::save() {
+    if (config_dir.length() == 0) {
+        std::cout << "Config::save() => config_dir is empty" << std::endl;
         return false;
     }
 
-    //Open the file
-
-    //Serialize the data
-    // json obj;
-    // obj[KEY_LAST_USER] = last_user;
-    // return obj.dump();
-
-    //write to file
+    if (file_name.length() == 0) {
+        std::cout << "Config::save() => file_name is empty" << std::endl;
+        return false;
+    }
 
     return true;
 }

@@ -1,16 +1,14 @@
 #include <string>
-#include <fstream>
 
 using std::string;
 
-class Config
-{
+class Config {
 public:
-    string last_user;
+    Config(const string &config_dir, const string &file_name);
 
-public:
-    Config() { }
-    Config(string file_path);
+    virtual bool save() = 0;
 
-    bool save(string file_path);
+protected:
+    string config_dir;
+    string file_name;
 };
