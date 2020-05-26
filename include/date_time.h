@@ -5,15 +5,17 @@ using std::ostream;
 
 class DateTime {
 public:
-    time_t epoch_time;
-    int year, month, day;
-    int hour, minute;
+    ulong epoch_time;
+    uint16_t year;
+    uint8_t month, day;
+    uint8_t hour, minute;
     bool pm;
 
 public:
     DateTime() {
-        time_t ttime = time(0);
+        time_t ttime = time(nullptr);
         epoch_time = ttime;
+        std::cout << "Epoch Time: " << epoch_time << "\n";
         tm *local_time = localtime(&ttime);
 
         year = 1900 + local_time->tm_year;
@@ -26,7 +28,7 @@ public:
     }
 
     friend ostream &operator<<(ostream &os, const DateTime &dt) {
-        os << dt.day << "/" << dt.month << "/" << dt.year << " " << dt.hour << ":" << dt.minute;
+        os << (int)dt.day << "/" << (int)dt.month << "/" << (int)dt.year << " " << (int)dt.hour << ":" << (int)dt.minute;
         if (dt.pm) {
             os << " PM";
         } else {
