@@ -12,7 +12,7 @@ public:
 public:
     //Serialized members
     string user_name;
-    vector<Timesheet> timesheets;
+    string latest_timesheet_file_name;
 
 public:
     ClockerConfig();

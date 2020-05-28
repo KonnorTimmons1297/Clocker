@@ -13,6 +13,7 @@ static const char *CONFIG_DIR = "/home/konnor/.clocker";
 static const char *CONFIG_FILE_NAME = "config";
 
 static const char *KEY_USER_NAME = "USER_NAME";
+static const char *KEY_LATEST_TIME_SHEET = "LATEST_TIME_SHEET";
 
 ClockerConfig::ClockerConfig() : Config(CONFIG_DIR, CONFIG_FILE_NAME) {
     string config_file_path;
@@ -42,12 +43,14 @@ void ClockerConfig::deserialize(const string &config_data) {
     auto j = json::parse(config_data);
 
     user_name = j[KEY_USER_NAME];
+    latest_timesheet_file_name = j[KEY_LATEST_TIME_SHEET];
 }
 
 string ClockerConfig::serialize() {
     json obj;
 
     obj[KEY_USER_NAME] = user_name;
+    obj[KEY_LATEST_TIME_SHEET] = latest_timesheet_file_name;
 
     return obj.dump();
 }

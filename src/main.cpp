@@ -39,10 +39,10 @@ int main(int argc, char *argv[]) {
         new_timesheet.start_day = current_time.day;
         new_timesheet.start_month = current_time.month;
         new_timesheet.start_year = current_time.year;
-        config.timesheets.emplace_back();
+        config.latest_timesheet_file_name = new_timesheet.generate_name();
     }
 
-    Timesheet current_timesheet = config.timesheets.back();
+    Timesheet current_timesheet(config.latest_timesheet_file_name);
 
     ClockEvent clock_event {
         .hour =  current_time.hour,
