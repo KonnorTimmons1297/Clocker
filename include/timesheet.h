@@ -32,9 +32,9 @@ public:
     vector<ClockRecord> records;
 public:
     Timesheet() = default;
-    Timesheet(string time_sheet_name);
+    Timesheet(const string& time_sheet_name);
 
-    string generate_name();
+    string generate_name() const;
 
     bool save();
 

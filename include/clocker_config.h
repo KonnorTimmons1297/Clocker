@@ -10,7 +10,7 @@ public:
     bool first_open = false;
 
 public:
-    //Serialized members
+	/* Serialized Attributes */
     string user_name;
     string latest_timesheet_file_name;
 

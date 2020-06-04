@@ -40,6 +40,7 @@ int main(int argc, char *argv[]) {
         new_timesheet.start_month = current_time.month;
         new_timesheet.start_year = current_time.year;
         config.latest_timesheet_file_name = new_timesheet.generate_name();
+        new_timesheet.save();
     }
 
     Timesheet current_timesheet(config.latest_timesheet_file_name);
@@ -62,6 +63,8 @@ int main(int argc, char *argv[]) {
     ClockRecord current_record = current_timesheet.records.back();
 
     current_record.events.push_back(clock_event);
+
+    current_timesheet.save();
 
     std::cout << "Clock time: " << current_time << "\n";
 

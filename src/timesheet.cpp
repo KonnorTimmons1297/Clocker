@@ -28,7 +28,14 @@ bool ClockRecord::is_today() const {
     return year == time.year && month == time.month && day == time.day;
 }
 
-Timesheet::Timesheet(string time_sheet_name) {
+Timesheet::Timesheet(const string& time_sheet_name) {
+    fs::directory_entry timesheet_directory(TIME_SHEET_DIR);
+
+    if(!timesheet_directory.exists())
+    {
+        fs::create_directory(timesheet_directory);
+    }
+
     string timesheet_file_path =
             TIME_SHEET_DIR + fs::path::preferred_separator + time_sheet_name;
 
@@ -47,11 +54,25 @@ Timesheet::Timesheet(string time_sheet_name) {
 }
 
 bool Timesheet::save() {
-    return false;
+    fs::directory_entry timesheet_directory(TIME_SHEET_DIR);
+
+    if(!timesheet_directory.exists())
+    {
+        fs::create_directory(timesheet_directory);
+    }
+
+    string timesheet_file_path =
+            TIME_SHEET_DIR + fs::path::preferred_separator + generate_name();
+
+    fstream timesheet_file(timesheet_file_path, std::ios::out);
+
+    timesheet_file << serialize();
+
+    return true;
 }
 
-string Timesheet::generate_name() {
-    return std::to_string(start_day) + "/" + std::to_string(start_month) + "/" + std::to_string(start_year) + ".t";
+string Timesheet::generate_name() const {
+    return std::to_string(start_day) + "_" + std::to_string(start_month) + "_" + std::to_string(start_year) + ".t";
 }
 
 void Timesheet::deserialize(const string& timesheet_data) {
@@ -64,7 +85,15 @@ void Timesheet::deserialize(const string& timesheet_data) {
     end_month = j[KEY_END_MONTH];
     end_year = j[KEY_END_YEAR];
 
-    //DESERIALIZE THE MESS BELOW
+    if(j.size() == 7)
+    {
+        auto serialized_records = j[KEY_RECORDS];
+
+        for(int i = 0; i < serialized_records.size(); i++)
+        {
+            auto record = serialized_records[i];
+        }
+    }
 }
 
 string Timesheet::serialize() {
@@ -90,7 +119,6 @@ string Timesheet::serialize() {
             }
             obj[KEY_RECORDS][record_key][event_key] = action;
         }
-
     }
 
     return obj.dump();
