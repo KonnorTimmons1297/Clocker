@@ -5,7 +5,7 @@ using std::ostream;
 
 class DateTime {
 public:
-    ulong epoch_time;
+    long epoch_time;
     uint16_t year;
     uint8_t month, day;
     uint8_t hour, minute;
